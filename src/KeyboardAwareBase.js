@@ -40,10 +40,7 @@ export default class KeyboardAwareBase extends Component {
   componentDidMount() {
     if(this._keyboardAwareView && this.props.startScrolledToBottom) {
       this.scrollToBottom(false);
-      if(this.opacityTimeout){
-        clearTimeout(this.opacityTimeout);
-      }
-      this.opacityTimeout= setTimeout(() => this._keyboardAwareView.setNativeProps({ opacity: 1 }), 100);
+       setTimeout(() => this._keyboardAwareView.setNativeProps({ opacity: 1 }), 100);
     }
   }
 
@@ -76,15 +73,7 @@ export default class KeyboardAwareBase extends Component {
 
   componentWillUnmount() {
     this._removeKeyboardListeners();
-    if(this.opacityTimeout){
-      clearTimeout(this.opacityTimeout);
-    }
-    if(this.focusedTimeout){
-      clearTimeout(this.focusedTimeout);
-    }
-    if(this.scrollToBottomTimeout){
-      clearTimeout(this.scrollToBottomTimeout);
-    }
+   
   }
   
   _scrollToFocusedTextInput() {
@@ -94,10 +83,8 @@ export default class KeyboardAwareBase extends Component {
         const isFocusedFunc = textInputRef.isFocused();
         const isFocused = isFocusedFunc && (typeof isFocusedFunc === "function") ? isFocusedFunc() : isFocusedFunc;
         if (isFocused) {
-          if(this.focusedTimeout){
-            clearTimeout(this.focusedTimeout);
-          }
-          this.focusedTimeout=  setTimeout(() => {
+         
+          setTimeout(() => {
             this._keyboardAwareView.getScrollResponder().scrollResponderScrollNativeHandleToKeyboard(
               ReactNative.findNodeHandle(textInputRef), this.props.scrollToInputAdditionalOffset, true);
           }, 0);
@@ -139,10 +126,8 @@ export default class KeyboardAwareBase extends Component {
     if (this._keyboardAwareView) {
 
       if(!this._keyboardAwareView.contentSize) {
-        if(this.scrollToBottomTimeout){
-          clearTimeout(this.scrollToBottomTimeout);
-        }
-        this.scrollToBottomTimeout=  setTimeout(() => this.scrollToBottom(scrollAnimated), 50);
+        
+       setTimeout(() => this.scrollToBottom(scrollAnimated), 50);
         return;
       }
 
